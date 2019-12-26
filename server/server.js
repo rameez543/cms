@@ -43,7 +43,7 @@ app.get('/categories',async(req,res)=>{
        return res.json({error:ex})
    }
 })
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname+'../build/index.html'));
-//   });
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname+'../build/index.html'));
+  });
 app.listen(port, () => console.log(`server started in PORT ${port}`))

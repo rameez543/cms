@@ -1,1 +1,1 @@
-export const DEV_URL = 'http://127.0.0.1:2001'
+export const DEV_URL =process.env.NODE_ENV = 'production'?'https://simple-cms543.herokuapp.com/': 'http://127.0.0.1:2001'
