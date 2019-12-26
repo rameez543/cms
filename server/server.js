@@ -4,13 +4,11 @@ const models = require('./models');
 const cors = require('cors')
 const app = express()
 app.use(express.json());
-app.use(express.static(path.join(__dirname, './public')));
+app.use(express.static(path.join(__dirname, '../build')));
 app.use(express.urlencoded({ extended: false }));
 app.use(cors())
 const port = process.env.PORT || 2001 ;
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname+'./public/index.html'));
-  });
+
 
 app.get('/brands',async(req,res)=>{
     try{
@@ -45,4 +43,7 @@ app.get('/categories',async(req,res)=>{
        return res.json({error:ex})
    }
 })
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname+'../build/index.html'));
+  });
 app.listen(port, () => console.log(`server started in PORT ${port}`))
