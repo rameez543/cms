@@ -20,8 +20,8 @@
     "sequelize": "^5.21.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "export NODE_ENV=production && react-scripts build && nodemon server/server.js",
+    "start": "nodemon server/server.js",
+    "build": "export NODE_ENV=production && react-scripts build ",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "nodemon server/server.js"
