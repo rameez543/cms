@@ -1,0 +1,5 @@
+.grid {
+	display: grid;
+	align-items: center;
+	height: 100vh;
+}
