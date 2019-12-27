@@ -9,7 +9,9 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       brandName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull:false,
+        unique:true
       },
       createdAt: {
         allowNull: false,

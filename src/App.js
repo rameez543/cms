@@ -3,7 +3,7 @@ import './app.css'
 import { connect } from 'react-redux';
 import { getProducts, getCategories, getBrands, } from './redux/ActionCreators'
 import { ProductList } from './components/ProducList'
-import {AddProduct} from './components/AddProduct'
+import AddProduct from './components/AddProduct'
 
 class App extends React.Component {
   constructor(props) {
