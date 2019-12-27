@@ -90,8 +90,8 @@ app.post('/add-categories', async (req, res) => {
         console.log(ex)
         if (ex.parent && ex.parent.code) {
             errors = {
-                23502: "value cannot be null",
-                23505: "value must be unique"
+                23502: "category cannot be null",
+                23505: "category must be unique"
             }
             return res.json({ success: false, error: errors[ex.parent.code] })
         }
@@ -109,8 +109,8 @@ app.post('/add-brands', async (req, res) => {
         console.log(ex)
         if (ex.parent && ex.parent.code) {
             errors = {
-                23502: "value cannot be null",
-                23505: "value must be unique"
+                23502: "brand cannot be null",
+                23505: "brand must be unique"
             }
             return res.json({ success: false, error: errors[ex.parent.code] })
         }
@@ -132,8 +132,8 @@ app.post('/add-products', async (req, res) => {
         console.log(ex)
         if (ex.parent && ex.parent.code) {
             errors = {
-                23502: "value cannot be null",
-                23505: "value must be unique"
+                23502: "product cannot be null",
+                23505: "product name must be unique"
             }
             return res.json({ success: false, error: errors[ex.parent.code] })
         }
