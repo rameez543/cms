@@ -26,9 +26,9 @@ class ProductList extends React.Component {
                 return (
                     <div className="card" key={key}>
                         <div>
-                            <span style={{ color: 'green', fontSize: '16px' }}>
+                            <span style={{ color: 'green', fontSize: '16px' ,fontWeight:600}}>
                                 category Tree ::: 
-                                <span style = {{color:"red"}}>
+                                <span style = {{color:"red",fontWeight:400,fontStyle:'italic'}}>
                                 {parentTree[item.categoryID] && parentTree[item.categoryID].length > 0 ? parentTree[item.categoryID].join(" > ") : ''}
                                     </span> 
                             </span>
