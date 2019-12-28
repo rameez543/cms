@@ -5,7 +5,7 @@ export const categoryTree = (categories) => {
     if (categories && categories.data && categories.data.length > 0) {
         for (let item of categories.data) {
             let ancesterID = item.parentCategory
-            const ancesterNameArray = []
+            const ancesterNameArray = [item.categoryName]
             while (ancesterID || ancesterID === 0) {
                 const ancestorObject = categories.data.find(category => category.id === ancesterID)
                 if (ancestorObject) {
