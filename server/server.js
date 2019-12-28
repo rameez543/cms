@@ -11,6 +11,26 @@ const port = process.env.PORT || 2001;
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 
+async function getCategoryTree(categoryID) {
+    let ancesterID = categoryID
+    let parentIDArray = []
+    // loop through each parent to find total ancesters
+    while (ancesterID && ancesterID.length > 0) {
+        const parentCategory = await models.Category.findAll({
+            attributes: ['id'],
+            where: { parentCategory: ancesterID }
+        })
+        let parentCategoryID = parentCategory && parentCategory.map(item => item.id)
+        if (parentCategoryID && parentCategoryID.length > 0) {
+            parentIDArray.push(parentCategoryID)
+        }
+        ancesterID = parentCategoryID
+    }
+    parentIDArray = parentIDArray.flat()
+    return parentIDArray
+}
+
+
 app.get('/brands', async (req, res) => {
     try {
         const result = await models.Brands.findAll({ attributes: ['id', 'brandName'] })
@@ -23,21 +43,13 @@ app.get('/brands', async (req, res) => {
 })
 app.get('/products', async (req, res) => {
     try {
-        console.log('req.quer', req.query)
         const { categoryID, brandID } = req.query
         if ((categoryID && categoryID !== '-1') || brandID && brandID !== '-1') {
             if (brandID === '-1' && categoryID !== '-1') {
-                const parentCategory = await models.Category.findAll({
-                    attributes: ['id'],
-                    where: { parentCategory: categoryID }
-                })
-                const parentCategoryID = parentCategory && parentCategory.map(item=>item.id)
-                console.log('pare', parentCategoryID)
+                const parentIDArray = await getCategoryTree(categoryID)
                 const result = await models.Product.findAll({
                     attributes: ['id', 'productName', 'categoryID', 'brandID', 'specification'],
-                    where: { categoryID: { [Op.or]: [categoryID, parentCategoryID] },  },
-
-
+                    where: { categoryID: { [Op.or]: [categoryID, parentIDArray] }, }
                 })
                 return res.json({ data: result })
             }
@@ -48,15 +60,10 @@ app.get('/products', async (req, res) => {
                 })
                 return res.json({ data: result })
             }
-
-            const parentCategory = await models.Category.findAll({
-                attributes: ['id'],
-                where: { parentCategory: categoryID }
-            })
-            const parentCategoryID = parentCategory && parentCategory.map(item=>item.id)
+            const parentCategoryID = await getCategoryTree(categoryID)
             const result = await models.Product.findAll({
                 attributes: ['id', 'productName', 'categoryID', 'brandID', 'specification'],
-                where: { categoryID: { [Op.or]: [categoryID, parentCategoryID] },brandID },
+                where: { categoryID: { [Op.or]: [categoryID, parentCategoryID] }, brandID },
             })
             return res.json({ data: result })
         }
